@@ -16,12 +16,15 @@
 //
 // Authors: Daniel Kopecek <dkopecek@redhat.com>
 //
+#include <build-config.h>
+
+#if defined(HAVE_UDEV)
 #include "LinuxDeviceManager.hpp"
 #include "LinuxSysIO.hpp"
 #include "Logger.hpp"
 #include "Exception.hpp"
+#include "USB.hpp"
 
-#include <USB.hpp>
 #include <sys/eventfd.h>
 #include <sys/select.h>
 #include <stdexcept>
@@ -214,7 +217,9 @@ namespace usbguard {
 
   LinuxDeviceManager::~LinuxDeviceManager()
   {
-    setDefaultBlockedState(/*state=*/false); // FIXME: Set to previous state
+    if (getRestoreControllerDeviceState()) {
+      setDefaultBlockedState(/*state=*/false); // FIXME: Set to previous state
+    }
     stop();
     udev_monitor_unref(_umon);
     udev_unref(_udev);
@@ -513,3 +518,4 @@ namespace usbguard {
     return _syspath_map.at(syspath);
   }
 } /* namespace usbguard */
+#endif /* HAVE_UDEV */

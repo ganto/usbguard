@@ -17,13 +17,16 @@
 // Authors: Daniel Kopecek <dkopecek@redhat.com>
 //
 #pragma once
+#include <build-config.h>
 
+#if defined(HAVE_UDEV)
+#include "Typedefs.hpp"
 #include "DeviceManager.hpp"
-#include <Typedefs.hpp>
-#include <Device.hpp>
-#include <Rule.hpp>
+#include "Device.hpp"
+#include "Rule.hpp"
 #include "LinuxSysIO.hpp"
 #include "Common/Thread.hpp"
+
 #include <libudev.h>
 #include <istream>
 
@@ -80,3 +83,4 @@ namespace usbguard {
   };
 
 } /* namespace usbguard */
+#endif /* HAVE_UDEV */
