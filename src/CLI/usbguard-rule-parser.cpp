@@ -88,7 +88,10 @@ int main(int argc, char **argv)
         rule_spec.clear();
         std::getline(stream, rule_spec);
         if (rule_spec.empty()) {
-          break;
+          continue;
+        }
+        if (rule_spec[0] == '#') {
+          continue;
         }
         ++line;
         std::cout << "INPUT: " << rule_spec << std::endl;

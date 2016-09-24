@@ -74,6 +74,9 @@ namespace usbguard {
     do {
       ++line_number;
       std::getline(stream, line_string);
+      if (line_string[0] == '#') {
+        continue;
+      }
       const Rule rule = parseRuleFromString(line_string, "", line_number);
       if (rule) {
 	appendRule(rule);
